@@ -1,0 +1,25 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.ehcache.org/v3"
+        xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
+
+    <!-- Template applique aux caches crees dynamiquement par Hibernate.
+         Ordre impose par le schema : expiry avant heap. -->
+    <cache-template name="default">
+        <expiry>
+            <ttl unit="minutes">60</ttl>
+        </expiry>
+        <heap unit="entries">2000</heap>
+    </cache-template>
+
+    <!-- Regions d'entites : l'alias doit etre le nom complet de l'entite -->
+    <cache alias="com.example.model.Auteur" uses-template="default"/>
+    <cache alias="com.example.model.Livre" uses-template="default"/>
+
+    <!-- Region de la collection Auteur.livres (@Cache sur la collection) -->
+    <cache alias="com.example.model.Auteur.livres" uses-template="default"/>
+
+    <!-- Regions techniques Hibernate -->
+    <cache alias="default-update-timestamps-region" uses-template="default"/>
+    <cache alias="default-query-results-region" uses-template="default"/>
+
+</config>
